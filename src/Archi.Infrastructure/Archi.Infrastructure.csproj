@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+	<ItemGroup>
+	  <Folder Include="Exceptions/" />
+	  <Folder Include="Persistence/Facture/" />
+	  <Folder Include="Persistence\" />
+	  <Folder Include="Services\" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Archi.Application\Archi.Application.csproj" />
+	</ItemGroup>
+
+</Project>

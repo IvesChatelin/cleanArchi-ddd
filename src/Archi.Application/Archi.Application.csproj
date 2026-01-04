@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="MediatR" Version="14.0.0" />
+    <PackageReference Include="Scrutor" Version="7.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Archi.Domain\Archi.Domain.csproj" />
+		<ProjectReference Include="..\Archi.Contracts\Archi.Contracts.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Common/Abstractions/Common/" />
+	  <Folder Include="UseCases/Facture/Common/" />
+	  <Folder Include="UseCases/Facture/Common/Queries/" />
+	</ItemGroup>
+
+</Project>

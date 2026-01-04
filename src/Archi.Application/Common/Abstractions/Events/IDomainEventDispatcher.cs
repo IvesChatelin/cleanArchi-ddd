@@ -1,0 +1,15 @@
+using Archi.Domain.Common.Abstractions;
+
+namespace Archi.Application.Common.Abstractions.Events;
+
+public interface IDomainEventDispatcher
+{
+    Task DispatchAsync<TEvent>(
+        TEvent domainEvent,
+        CancellationToken ct)
+        where TEvent : IDomainEvent;
+
+    Task DispatchAsync(
+        IEnumerable<IDomainEvent> domainEvents,
+        CancellationToken cancellationToken = default);
+}
