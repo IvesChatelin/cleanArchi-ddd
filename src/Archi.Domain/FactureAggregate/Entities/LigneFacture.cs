@@ -1,12 +1,13 @@
-using Archi.Domain.Common.Models;
 using Archi.Domain.FactureAggregate.ValueObjects;
 using Archi.Domain.ProduitAggregate.ValueObjects;
 using Archi.Domain.ProduitAggregate;
+using Archi.SharedKernel.Models;
 
 namespace Archi.Domain.FactureAggregate.Entities;
 
 public class LigneFacture : Entity<LigneFactureId>
 {
+    public FactureId FactureId { get; private set; }
     public ProduitId ProduitId { get; private set; }
     public uint Quantite { get; private set; }
     public string NomProduit { get; private set; }
@@ -17,6 +18,7 @@ public class LigneFacture : Entity<LigneFactureId>
 
     private LigneFacture(
         LigneFactureId id,
+        FactureId factureId,
         uint quantite,
         ProduitId produitId,
         string nomProduit,
@@ -24,6 +26,7 @@ public class LigneFacture : Entity<LigneFactureId>
         decimal tva,
         uint tvaPourcentage) : base(id)
     {
+        FactureId = factureId;
         Quantite = quantite;
         ProduitId = produitId;
         NomProduit = nomProduit;
@@ -33,10 +36,11 @@ public class LigneFacture : Entity<LigneFactureId>
         EstVerrouille = false;
     }
 
-    public static Result<LigneFacture> CreerDepuisProduit(Produit produit, uint quantite)
+    public static Result<LigneFacture> CreerDepuisProduit(Produit produit, uint quantite, FactureId factureId)
     {
         var ligneFacture = new LigneFacture(
             LigneFactureId.Creer(),
+            factureId,
             quantite,
             produit.Id,
             produit.Nom,

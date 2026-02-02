@@ -1,17 +1,17 @@
-using Archi.Domain.Common.Models;
+using Archi.SharedKernel.Models;
 
 namespace Archi.Domain.ProduitAggregate.ValueObjects;
 
 public sealed class PrixProduit : ValueObject
 {
-    public required decimal PrixUnitaireHt { get; init; }
+    public decimal PrixUnitaireHt { get; private set; }
 
-    public decimal PrixUnitaireTTC { get; }
+    public decimal PrixUnitaireTTC { get; private set; }
 
-    public required decimal TvaEur { get; init; }
+    public decimal TvaEur { get; private set; }
 
-    public uint TvaPourcentage { get; }
-
+    public uint TvaPourcentage { get; private set; }
+    
     public PrixProduit(decimal prixUnitaireHt, decimal tvaEur)
     {
         PrixUnitaireHt = prixUnitaireHt;

@@ -7,8 +7,21 @@
   </PropertyGroup>
 
   <ItemGroup>
-		<ProjectReference Include="..\Archi.Application\Archi.Application.csproj" />
-    <ProjectReference Include="..\Archi.Contracts\Archi.Contracts.csproj" />
+    <PackageReference Include="Serilog.AspNetCore" Version="10.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+		<ProjectReference Include="..\Archi.Infrastructure\Archi.Infrastructure.csproj" />
 	</ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="EndPoints/" />
+    <Folder Include="Extensions/" />
+    <Folder Include="Middlewares/" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="appsettings.json" />
+  </ItemGroup>
 
 </Project>

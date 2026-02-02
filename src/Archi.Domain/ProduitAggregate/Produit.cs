@@ -1,5 +1,5 @@
-using Archi.Domain.Common.Models;
 using Archi.Domain.ProduitAggregate.ValueObjects;
+using Archi.SharedKernel.Models;
 
 namespace Archi.Domain.ProduitAggregate;
 

@@ -20,13 +20,13 @@ public static class LoggingDecorator
             _innerHandler = innerHandler;
         }
 
-        public async Task<Result<TResponse>> Handle(TCommand command, CancellationToken ct)
+        public async Task<Result<TResponse>> Handle(TCommand command, CancellationToken cancellationToken)
         {
             string commandName = typeof(TCommand).Name;
 
             _logger.LogInformation("Processing command {Command}", commandName);
 
-            Result<TResponse> result = await _innerHandler.Handle(command, ct);
+            Result<TResponse> result = await _innerHandler.Handle(command, cancellationToken);
 
             if (result.IsSuccess)
             {
@@ -55,13 +55,13 @@ public static class LoggingDecorator
             _innerHandler = innerHandler;
         }
 
-        public async Task<Result> Handle(TCommand command, CancellationToken ct)
+        public async Task<Result> Handle(TCommand command, CancellationToken cancellationToken)
         {
             string commandName = typeof(TCommand).Name;
 
             _logger.LogInformation("Processing command {Command}", commandName);
 
-            Result result = await _innerHandler.Handle(command, ct);
+            Result result = await _innerHandler.Handle(command, cancellationToken);
 
             if (result.IsSuccess)
             {

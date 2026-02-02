@@ -1,4 +1,4 @@
-using Archi.Domain.Common.Models;
+using Archi.SharedKernel.Models;
 
 namespace Archi.Domain.FactureAggregate.ValueObjects;
 
@@ -14,6 +14,11 @@ public class LigneFactureId : ValueObject
     public static LigneFactureId Creer()
     {
         return new LigneFactureId(Guid.NewGuid());
+    }
+
+    public static LigneFactureId CreerWithValue(Guid value)
+    {
+        return new LigneFactureId(value);
     }
 
     protected override IEnumerable<object> GetAtomicValues()

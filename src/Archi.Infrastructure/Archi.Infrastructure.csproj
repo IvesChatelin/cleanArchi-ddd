@@ -7,14 +7,21 @@
   </PropertyGroup>
 
 	<ItemGroup>
-	  <Folder Include="Exceptions/" />
-	  <Folder Include="Persistence/Facture/" />
+	  <Folder Include="Persistence/Dapper/" />
+	  <Folder Include="Persistence/EFCore/" />
 	  <Folder Include="Persistence\" />
 	  <Folder Include="Services\" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="..\Archi.Application\Archi.Application.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.1" />
+	  <PackageReference Include="Microsoft.Extensions.Configuration" Version="10.0.1" />
+	  <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="10.0.1" />
+	  <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.0" />
 	</ItemGroup>
 
 </Project>

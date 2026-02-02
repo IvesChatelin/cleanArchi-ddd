@@ -1,4 +1,4 @@
-using Archi.Domain.Common.Models;
+using Archi.SharedKernel.Models;
 
 namespace Archi.Domain.ProduitAggregate.ValueObjects;
 

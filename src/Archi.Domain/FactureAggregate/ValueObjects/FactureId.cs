@@ -1,4 +1,4 @@
-using Archi.Domain.Common.Models;
+using Archi.SharedKernel.Models;
 
 namespace Archi.Domain.FactureAggregate.ValueObjects;
 
@@ -14,6 +14,11 @@ public class FactureId : ValueObject
     public static FactureId Creer()
     {
         return new FactureId(Guid.NewGuid());
+    }
+
+    public static FactureId CreerWithValue(Guid value)
+    {
+        return new FactureId(value);
     }
 
     protected override IEnumerable<object> GetAtomicValues()

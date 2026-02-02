@@ -1,4 +1,4 @@
-using Archi.Domain.Common.Errors;
+using Archi.SharedKernel.Errors;
 
 namespace Archi.Domain.ProduitAggregate;
 
