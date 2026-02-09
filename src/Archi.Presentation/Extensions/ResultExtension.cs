@@ -5,21 +5,15 @@ namespace Archi.Presentation.Extensions;
 
 public static class ResultExtension
 {
-    public static IResult Problem(Result result)
+    public static IResult Problem(Error error)
     {
-        if (result.IsSuccess)
-        {
-            throw new InvalidOperationException();
-        }
-
         return Results.Problem(
-            detail: GetDetail(result.Error), 
-            statusCode: GetStatusCode(result.Error),
-            title: GetTitle(result.Error),
-            type: GetType(result.Error),
-            extensions: null
+            detail: GetDetail(error), 
+            statusCode: GetStatusCode(error),
+            title: GetTitle(error),
+            type: GetType(error),
+            extensions: GetExtensions(error)
         );
-        
     }
 
     static string GetTitle(Error error)
@@ -55,7 +49,7 @@ public static class ResultExtension
             ErrorType.Failure => "Bad Request",
             ErrorType.NotFound => "Not Found",
             ErrorType.Conflict => "Conflict",
-            ErrorType.Validation => "Bad Request",
+            ErrorType.Validation => "Validation",
             ErrorType.Problem => "Internal Server Error",
             _ => "Unknown Error"
         };
@@ -74,12 +68,22 @@ public static class ResultExtension
         };
     }
 
-    /*static Dictionary<string, object?>? GetExtensions(Error error)
+    static Dictionary<string, object?>? GetExtensions(Error error)
     {
+        if (error is not ValidationError validationError)
+        {
+            return null;
+        }
+
+        var formattedErros = validationError.Errors.Select(e => new {
+            e.Code,
+            e.Description,
+            Type = e.Type.ToString()
+        });
+
         return new Dictionary<string, object?>()
         {
-            { "Code", error.Code },
-            { "Type", error.Type.ToString() }
+            {"errors", formattedErros },
         };
-    }*/
+    }
 }

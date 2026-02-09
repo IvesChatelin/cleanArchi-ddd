@@ -6,11 +6,11 @@ public class PostgresOptions
 {
     public const string SectionName = "Postgres";
 
-    public required string Host { get; set; } = string.Empty;
+    public required string Host { get; set; }
     public required int Port { get; set; } 
-    public required string Database { get; set; } = string.Empty;
-    public required string Username { get; set; } = string.Empty;
-    public required string Password { get; set; } = string.Empty;
+    public required string Database { get; set; }
+    public required string Username { get; set; }
+    public required string Password { get; set; }
 
     public string ConnectionString()
     {

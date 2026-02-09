@@ -16,6 +16,11 @@ public sealed class ProduitId : ValueObject
         return new ProduitId(Guid.NewGuid());
     }
 
+    public static ProduitId CreerWithValue(Guid value)
+    {
+        return new ProduitId(value);
+    }
+
     protected override IEnumerable<object> GetAtomicValues()
     {
         yield return Value;

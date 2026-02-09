@@ -1,5 +1,4 @@
-using Archi.Application.Common.Abstractions.Events;
-using Archi.Domain.Common.Abstractions;
+using Archi.SharedKernel.Events;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Archi.Application.Common.Behaviors;
@@ -32,9 +31,15 @@ public sealed class DomainEventsDispatcher : IDomainEventDispatcher
         IDomainEvent domainEvent,
         CancellationToken ct)
     {
+        // On récupère la méthode générique ouverte
         var method = typeof(IDomainEventDispatcher)
-            .GetMethod(nameof(DispatchAsync), [domainEvent.GetType(), typeof(CancellationToken)]);
+            .GetMethods()
+            .First(m => m.Name == nameof(DispatchAsync) && m.IsGenericMethod);
 
-        return (Task)method!.Invoke(this, [domainEvent, ct])!;
+        // On la ferme avec le type réel de l’event
+        var genericMethod = method.MakeGenericMethod(domainEvent.GetType());
+
+        // On invoque la bonne version
+        return (Task)genericMethod.Invoke(this, [domainEvent, ct])!;
     }
 }

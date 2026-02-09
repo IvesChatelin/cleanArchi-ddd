@@ -18,7 +18,7 @@ public sealed class Result<T>
 
     public bool IsSuccess { get; }
 
-    public bool IsError => !IsSuccess;
+    public bool IsFailure => !IsSuccess;
 
     private Result(T value)
     {
@@ -31,16 +31,15 @@ public sealed class Result<T>
     {
         Error = error ?? throw new ArgumentNullException(nameof(error), "Error of result cannot be null.");
         IsSuccess = false;
-        Error = error;
     }
 
     public static Result<T> Success(T value) => new(value);
 
     public static Result<T> Failure(Error error) => new(error);
 
-    public TResult Match<TResult>(Func<T, TResult> onSuccess, Func<Error, TResult> onError)
+    public TResult Match<TResult>(Func<T, TResult> onSuccess, Func<Error, TResult> onFailure)
     {
-        return IsSuccess ? onSuccess(Value!) : onError(Error!);
+        return IsSuccess ? onSuccess(Value!) : onFailure(Error);
     }
 }
 
@@ -57,7 +56,7 @@ public sealed class Result
 
     public bool IsSuccess { get; }
 
-    public bool IsError => !IsSuccess;
+    public bool IsFailure => !IsSuccess;
 
     private Result()
     {
@@ -69,15 +68,14 @@ public sealed class Result
     {
         Error = error ?? throw new ArgumentNullException(nameof(error), "Error cannot be null.");
         IsSuccess = false;
-        Error = error;
     }
 
     public static Result Success() => new();
 
     public static Result Failure(Error error) => new(error);
 
-    public TResult Match<TResult>(Func<TResult> onSuccess, Func<Error, TResult> onError)
+    public TResult Match<TResult>(Func<TResult> onSuccess, Func<Error, TResult> onFailure)
     {
-        return IsSuccess ? onSuccess() : onError(Error!);
+        return IsSuccess ? onSuccess() : onFailure(Error!);
     }
 }

@@ -1,5 +1,5 @@
 using Archi.Application.Common.Abstractions.Queries;
-using Archi.Contracts.Factures.Dtos;
+using Archi.Contracts.Factures;
 
 namespace Archi.Application.UseCases.Factures.CreerUneFacture.Queries;
 

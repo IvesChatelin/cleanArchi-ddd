@@ -22,7 +22,18 @@ public static class ApplicationServiceRegistration
                 .WithScopedLifetime()
             .AddClasses(classes => classes.AssignableTo(typeof(IQueryHandler<,>)), publicOnly: false)
                 .AsImplementedInterfaces()
-                .WithScopedLifetime()
+                .WithScopedLifetime());
+
+        services.Decorate(typeof(ICommandHandler<,>), typeof(TransactionalDecorator.TransactionalCommandHandler<,>));
+        services.Decorate(typeof(ICommandHandler<,>), typeof(ValidationDecorator.ValidationCommandHandler<,>));
+        services.Decorate(typeof(ICommandHandler<,>), typeof(LoggingDecorator.LoggingCommandHandler<,>));
+        
+        //services.Decorate(typeof(ICommandHandler<>), typeof(LoggingDecorator.LoggingCommandHandler<>));
+
+        services.Decorate(typeof(IQueryHandler<,>), typeof(LoggingDecorator.LoggingQueryHandler<,>));
+        
+        services.Scan(scan => scan
+            .FromAssemblies(Assembly.GetExecutingAssembly())
             .AddClasses(classes => classes.AssignableTo(typeof(IDomainEventHandler<>)))
                 .AsImplementedInterfaces()
                 .WithScopedLifetime()
@@ -31,15 +42,8 @@ public static class ApplicationServiceRegistration
                 .WithTransientLifetime()
         );
 
-        services.Decorate(typeof(ICommandHandler<,>), typeof(LoggingDecorator.CommandHandler<,>));
-        services.Decorate(typeof(ICommandHandler<>), typeof(LoggingDecorator.CommandHandler<>));
-
-        return services;
-    }
-
-    public static IServiceCollection AddValidators(this IServiceCollection services)
-    {
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+
         return services;
     }
 

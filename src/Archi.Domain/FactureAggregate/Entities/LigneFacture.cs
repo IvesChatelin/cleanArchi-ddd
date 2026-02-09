@@ -16,6 +16,9 @@ public class LigneFacture : Entity<LigneFactureId>
     public uint TvaPourcentage { get; private set; }
     public bool EstVerrouille { get; private set; }
 
+#pragma warning disable CS8618
+    private LigneFacture(){} 
+
     private LigneFacture(
         LigneFactureId id,
         FactureId factureId,

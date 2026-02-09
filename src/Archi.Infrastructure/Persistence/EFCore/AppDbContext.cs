@@ -10,8 +10,8 @@ namespace Archi.Infrastructure.Persistence.EFCore;
 
 public class AppDbContext : DbContext
 {
-    public DbSet<Facture> Students { get; set; }
-    public DbSet<Produit> Grades { get; set; }
+    public DbSet<Facture> Factures { get; set; }
+    public DbSet<Produit> Produits { get; set; }
     private readonly IDomainEventDispatcher _domainEventsDispatcher;
     private readonly PostgresOptions _options;
 
@@ -35,7 +35,7 @@ public class AppDbContext : DbContext
         optionsBuilder.UseNpgsql(_options.ConnectionString());
     }
 
-    protected new async Task<int> SaveChangesAsync(CancellationToken ct = default)
+    public override async Task<int> SaveChangesAsync(CancellationToken ct = default)
     {
         int result = await base.SaveChangesAsync(ct);
         await PublishDomainEventsAsync();
@@ -49,16 +49,9 @@ public class AppDbContext : DbContext
             .Select(entry => entry.Entity)
             .SelectMany(entity =>
             {
-                List<IDomainEvent> domainEvents = [];
-
-                foreach(var domainEvent in entity.GetDomainEvents())
-                {
-                    domainEvents.AddRange(domainEvent);
-                }
-
+                var events = entity.GetDomainEvents().ToList();
                 entity.ClearDomainEvents();
-
-                return domainEvents;
+                return events;
             })
             .ToList();
         

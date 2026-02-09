@@ -6,7 +6,7 @@
 /// <param name="Code"></param>
 /// <param name="Description"></param>
 /// <param name="Type"></param>
-public sealed record Error(string Code, string Description, ErrorType Type)
+public record Error(string Code, string Description, ErrorType Type)
 {
     public static readonly Error None = new(string.Empty, string.Empty, ErrorType.Failure);
 

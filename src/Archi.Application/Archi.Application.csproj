@@ -16,6 +16,7 @@
 	<ItemGroup>
 		<ProjectReference Include="../Archi.SharedKernel/Archi.SharedKernel.csproj" />
 		<ProjectReference Include="..\Archi.Domain\Archi.Domain.csproj" />
+		<ProjectReference Include="..\Archi.Contracts\Archi.Contracts.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

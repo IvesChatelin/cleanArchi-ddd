@@ -18,6 +18,9 @@ public abstract class Entity<T> : IEntity
         Id = id;
     }
 
+#pragma warning disable CS8618
+    protected Entity(){}
+
     private readonly List<IDomainEvent> _domainEvents = [];
 
     public IReadOnlyList<IDomainEvent> GetDomainEvents()

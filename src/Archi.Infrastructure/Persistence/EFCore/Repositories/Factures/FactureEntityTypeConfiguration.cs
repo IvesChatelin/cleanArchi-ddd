@@ -1,9 +1,11 @@
 using Archi.Domain.FactureAggregate;
+using Archi.Domain.FactureAggregate.Entities;
 using Archi.Domain.FactureAggregate.ValueObjects;
+using Archi.Domain.ProduitAggregate.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Archi.Infrastructure.Persistence.Repositories.Factures;
+namespace Archi.Infrastructure.Persistence.EFCore.Repositories.Factures;
 
 public class FactureEntityTypeConfiguration : IEntityTypeConfiguration<Facture>
 {
@@ -44,14 +46,24 @@ public class FactureEntityTypeConfiguration : IEntityTypeConfiguration<Facture>
         builder.OwnsMany(f => f.Lignes, lfb =>
         {
             lfb.ToTable("lignes_factures");
+            
             lfb.WithOwner().HasForeignKey("FactureId");
-            lfb.HasKey("Id", "LigneFactureId");
+
+            lfb.HasKey(l => l.Id);
+
             lfb.Property(l => l.Id)
-                .HasColumnName("LigneFactureId")
+                .HasColumnName("ligne_facture_id")
                 .ValueGeneratedNever()
                 .HasConversion(
                     id => id.Value,
                     value => LigneFactureId.CreerWithValue(value)
+                );
+
+            lfb.Property(l => l.ProduitId)
+                .HasColumnName("produit_id")
+                .HasConversion(
+                    id => id.Value,
+                    value => ProduitId.CreerWithValue(value)
                 );
 
             // use navigation here to configure private field mapping if we have one
