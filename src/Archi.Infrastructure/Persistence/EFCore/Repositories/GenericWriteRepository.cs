@@ -21,10 +21,10 @@ public class GenericWriteRepository<TEntity, TId> : IGenericWriteRepository<TEnt
         return Task.FromResult(Result.Success());
     }
 
-    public async Task<Result<TEntity>> AddAsync(TEntity entity, CancellationToken ct = default)
+    public async Task<Result> AddAsync(TEntity entity, CancellationToken ct = default)
     {
         await Dbcontext.Set<TEntity>().AddAsync(entity, ct);
-        return Result<TEntity>.Success(entity);
+        return Result.Success();
     }
 
     public Task<Result> UpdateAsync(TEntity entity, CancellationToken ct = default)

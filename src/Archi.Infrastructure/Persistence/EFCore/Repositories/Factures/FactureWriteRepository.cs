@@ -4,9 +4,9 @@ using Archi.Domain.FactureAggregate.ValueObjects;
 
 namespace Archi.Infrastructure.Persistence.EFCore.Repositories.Factures;
 
-public class FactureReadRepository : GenericReadRepository<Facture, FactureId>, IFactureReadRepository
+public class FactureWriteRepository : GenericWriteRepository<Facture, FactureId>, IFactureWriteRepository
 {
-    public FactureReadRepository(AppDbContext context) : base(context)
+    public FactureWriteRepository(AppDbContext context) : base(context)
     {
     }
 }

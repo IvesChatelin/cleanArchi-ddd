@@ -4,6 +4,7 @@ using Archi.Domain.ProduitAggregate;
 using Archi.Domain.ProduitAggregate.Repositories;
 using Archi.Domain.ProduitAggregate.ValueObjects;
 using Archi.SharedKernel.Models;
+using Mapster;
 
 namespace Archi.Application.UseCases.Produits.CreerProduit.Commands;
 
@@ -18,31 +19,17 @@ public sealed class CreerProduitCommandHandler : ICommandHandler<CreerProduitCom
     
     public async Task<Result<ProduitDto>> Handle(CreerProduitCommand command, CancellationToken cancellationToken)
     {
-        var prix = new PrixProduit(command.Produit.PrixUnitaire.PrixUnitaireHt, command.Produit.PrixUnitaire.TvaEur);
-        var produit = Produit.Creer(command.Produit.Nom, prix, command.Produit.StockDisponible);
+        var prix = new PrixProduit(command.PrixUnitaire.PrixUnitaireHt, command.PrixUnitaire.TvaEur);
+        var factoryResult = Produit.Creer(command.Nom, prix, command.StockDisponible);
 
-        if (produit.IsFailure)
-            return Result<ProduitDto>.Failure(produit.Error);
+        if (factoryResult.IsFailure)
+            return Result<ProduitDto>.Failure(factoryResult.Error);
 
-        var addResult = await _produitWriteRepository.AddAsync(produit.Value!, cancellationToken);
+        var produit = factoryResult.Value!;
 
-        if (addResult.IsFailure)
-            return Result<ProduitDto>.Failure(addResult.Error);
+        _ = await _produitWriteRepository.AddAsync(produit, cancellationToken);
 
-        var produitDto = new ProduitDto()
-        {
-            Id = new ProduitIdDto() { Value = produit.Value!.Id.Value },
-            Nom = produit.Value.Nom,
-            PrixUnitaire = new PrixProduitDto()
-            {
-                PrixUnitaireHt = produit.Value.PrixUnitaire.PrixUnitaireHt,
-                TvaEur = produit.Value.PrixUnitaire.TvaEur,
-                TvaPourcentage = produit.Value.PrixUnitaire.TvaPourcentage,
-                PrixUnitaireTTC = produit.Value.PrixUnitaire.PrixUnitaireTTC
-            },
-            IsDisponible = produit.Value.IsDisponible,
-            StockDisponible = produit.Value.StockDisponible
-        };
+        var produitDto = produit.Adapt<ProduitDto>();
 
         return Result<ProduitDto>.Success(produitDto);
     }

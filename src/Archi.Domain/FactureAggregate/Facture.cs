@@ -29,22 +29,24 @@ public class Facture : AggregateRoot<FactureId>
         return Result<Facture>.Success(facture);
     }
 
-    public Result<PrixFacture> CalculerTotal()
+    public Result CalculerTotal()
     {
         var totalApayer = Lignes.Sum(l => l.CalculerTotalPrixUnitaireHt().Value) + Lignes.Sum(l => l.CalculerTotalTvaEur().Value);
         var totalTvaEur = Lignes.Sum(l => l.CalculerTotalTvaEur().Value);
-        var prix = new PrixFacture(totalApayer, totalTvaEur);
-        return Result<PrixFacture>.Success(prix);
+        PrixTotal = new PrixFacture(totalApayer, totalTvaEur);
+        return Result.Success();
     }
 
     public Result AjouterUneLigne(Produit produit, uint quantite)
     {
-        if (EstModifiable().IsSuccess)
+        if (EstModifiable().IsFailure)
         {
             return Result.Failure(FactureErrors.NonModifiable);
         }
+
         var ligne = LigneFacture.CreerDepuisProduit(produit, quantite, Id);
         _lignes.Add(ligne.Value!);
+        _ = CalculerTotal();
         return Result.Success();
     }
     public Result ModiferStatut(StatutFacture nouveauStatut)
@@ -53,10 +55,10 @@ public class Facture : AggregateRoot<FactureId>
         return Result.Success();
     }
 
-    public Result<PrixFacture> RecalculerPrixTotal()
+    public Result RecalculerPrixTotal()
     {
-        PrixTotal = CalculerTotal().Value!;
-        return Result<PrixFacture>.Success(PrixTotal);
+        _ = CalculerTotal();
+        return Result.Success();
     }
 
     public Result EstModifiable()

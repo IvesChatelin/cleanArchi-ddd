@@ -2,6 +2,6 @@
 
 public static class CollectionName
 {
-    public static readonly string UnitTests = "UnitTests";
-    public static readonly string IntegrationTests = "IntegrationTests";
+    public const string UnitTest = "UnitTest";
+    public const string IntegrationTest = "IntegrationTest";
 }

@@ -34,10 +34,10 @@ public static class ApplicationServiceRegistration
         
         services.Scan(scan => scan
             .FromAssemblies(Assembly.GetExecutingAssembly())
-            .AddClasses(classes => classes.AssignableTo(typeof(IDomainEventHandler<>)))
+            .AddClasses(classes => classes.AssignableTo(typeof(IDomainEventHandler<>)), publicOnly: false)
                 .AsImplementedInterfaces()
                 .WithScopedLifetime()
-            .AddClasses(classes => classes.AssignableTo<IDomainEventDispatcher>())
+            .AddClasses(classes => classes.AssignableTo<IDomainEventDispatcher>(), publicOnly: false)
                 .AsImplementedInterfaces()
                 .WithTransientLifetime()
         );

@@ -1,5 +1,4 @@
 using Archi.Domain.FactureAggregate;
-using Archi.Domain.FactureAggregate.Entities;
 using Archi.Domain.FactureAggregate.ValueObjects;
 using Archi.Domain.ProduitAggregate.ValueObjects;
 using Microsoft.EntityFrameworkCore;

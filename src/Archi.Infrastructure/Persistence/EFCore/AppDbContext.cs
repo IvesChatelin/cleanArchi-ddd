@@ -17,10 +17,10 @@ public class AppDbContext : DbContext
 
     public AppDbContext(
         IDomainEventDispatcher domainEventsDispatcher, 
-        IOptions<PostgresOptions> options)
+        IOptionsMonitor<PostgresOptions> options)
     {
         _domainEventsDispatcher = domainEventsDispatcher;
-        _options = options.Value;
+        _options = options.CurrentValue;
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -7,12 +7,12 @@ public class CreerProduitCommandValidator : AbstractValidator<CreerProduitComman
 {
     public CreerProduitCommandValidator()
     {
-        RuleFor(x => x.Produit).NotNull();
-        RuleFor(x => x.Produit.Nom)
+        RuleFor(x => x).NotNull();
+        RuleFor(x => x.Nom)
             .NotEmpty()
             .WithMessage(ProduitErrors.NullName.Description)
             .WithErrorCode(ProduitErrors.NullName.Code);
-        RuleFor(x => x.Produit.PrixUnitaire)
+        RuleFor(x => x.PrixUnitaire)
             .NotNull()
             .WithErrorCode(ProduitErrors.NullPrice.Code)
             .WithMessage(ProduitErrors.NullPrice.Description)
