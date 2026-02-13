@@ -1,4 +1,5 @@
 using System.Reflection;
+using Archi.Infrastructure.Persistence.EFCore;
 using Microsoft.OpenApi;
 
 namespace Archi.Presentation.Extensions;
@@ -7,7 +8,6 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddSwagger(this IServiceCollection services)
     {
-        // Register presentation layer services here
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen(options =>
         {
@@ -27,7 +27,6 @@ public static class ServiceCollectionExtensions
 
     public static IServiceCollection AddCustomizeProblemDetails(this IServiceCollection services)
     {
-        // Register presentation layer services here
         services.AddProblemDetails(options =>
         {
             options.CustomizeProblemDetails = ctx =>
@@ -37,6 +36,16 @@ public static class ServiceCollectionExtensions
             };
             // Additional mappings can be added here
         });
+
+        return services;
+    }
+
+    public static IServiceCollection AddCustomizeHealthChecks(this IServiceCollection services)
+    {
+        services.AddHealthChecks()
+            .AddDbContextCheck<AppDbContext>(
+                tags: ["ready"]
+            );
 
         return services;
     }

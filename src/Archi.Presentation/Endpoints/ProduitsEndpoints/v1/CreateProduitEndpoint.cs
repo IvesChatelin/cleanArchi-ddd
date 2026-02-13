@@ -10,7 +10,12 @@ public class CreateProduitEndpoint : IEndpoint
     public int Version => 1;
     public string Group => Tags.Produits;
 
-    public sealed record CreateProduitRequest(ProduitDto Produit);
+    public sealed record CreateProduitRequest(
+        ProduitIdDto Id,
+        string Nom,
+        PrixProduitDto PrixUnitaire,
+        int StockDisponible
+    );
     
     public void MapEndpoint(RouteGroupBuilder group)
     {
@@ -30,10 +35,17 @@ public class CreateProduitEndpoint : IEndpoint
         ICommandHandler<CreerProduitCommand, ProduitDto> handler, 
         CancellationToken cancellationToken)
     {
-        var command = new CreerProduitCommand(request.Produit);
-            var result = await handler.Handle(command, cancellationToken);
-            return result.Match(
-                produitDto => TypedResults.Created($"/produits/{produitDto.Id}", produitDto),
-                errors => ResultExtension.Problem(errors));
+        var command = new CreerProduitCommand(
+            Id: request.Id,
+            Nom: request.Nom,
+            PrixUnitaire: request.PrixUnitaire,
+            StockDisponible: request.StockDisponible
+        );
+
+        var result = await handler.Handle(command, cancellationToken);
+        
+        return result.Match(
+            produitDto => TypedResults.Created($"/produits/{produitDto.Id}", produitDto),
+            errors => ResultExtension.Problem(errors));
     }
 }

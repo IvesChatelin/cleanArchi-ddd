@@ -1,5 +1,4 @@
 using Archi.SharedKernel.Errors;
-using Archi.SharedKernel.Models;
 
 namespace Archi.Presentation.Extensions;
 
@@ -75,15 +74,9 @@ public static class ResultExtension
             return null;
         }
 
-        var formattedErros = validationError.Errors.Select(e => new {
-            e.Code,
-            e.Description,
-            Type = e.Type.ToString()
-        });
-
         return new Dictionary<string, object?>()
         {
-            {"errors", formattedErros },
+            {"errors", validationError.Errors },
         };
     }
 }

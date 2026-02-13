@@ -6,7 +6,7 @@ using Archi.Presentation.Extensions;
 
 namespace Archi.Presentation.EndPoints.ProduitsEndpoints.v1;
 
-public class GetAllProduit : IEndpoint
+public class GetAllProduitEndpoint : IEndpoint
 {
     public int Version => 1;
 
