@@ -1,24 +1,24 @@
 using Archi.Infrastructure.Persistence.Configurations;
-using Archi.Infrastructure.Persistence.EFCore;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Npgsql;
+using Testcontainers.PostgreSql;
 
 namespace Archi.Presentation.Tests;
 
 internal static class ServiceCollectionTestExtension
 {
-    internal static IServiceCollection RemoveDbContext(this IServiceCollection services, string connectionString)
+    internal static IServiceCollection ReplaceDbOptions(this IServiceCollection services, PostgreSqlContainer postgreSqlContainer)
     {
         var serviceDescriptor = services
-            .SingleOrDefault(s => s.ServiceType == typeof(DbContextOptions<AppDbContext>));
+            .SingleOrDefault(s => s.ServiceType == typeof(IConfigureOptions<PostgresOptions>));
 
         if (serviceDescriptor is not null)
         {
             services.Remove(serviceDescriptor);
         }
 
-        var builder = new NpgsqlConnectionStringBuilder(connectionString);
+        var builder = new NpgsqlConnectionStringBuilder(postgreSqlContainer.GetConnectionString());
 
         services.Configure<PostgresOptions>(options =>
         {
@@ -26,10 +26,10 @@ internal static class ServiceCollectionTestExtension
             options.Host = builder.Host!;
             options.Password = builder.Password!;
             options.Username = builder.Username!;
+            options.Port = builder.Port!;
         });
-
-        services.AddDbContext<AppDbContext>();
 
         return services;
     }
+
 }

@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 using Archi.Infrastructure.Persistence.Configurations;
 using Archi.Infrastructure.Persistence.EFCore;
 using Archi.SharedKernel.UnitOfWork;
@@ -17,6 +18,7 @@ public static class InfrastructureServiceRegistration
         services.AddOptions(configuration); // add as first service
         services.AddRepositories();
         services.AddJsonOptionsOpenAPI();
+        services.AddGlobalJsonOptions();
         return services;
     }
 
@@ -57,6 +59,17 @@ public static class InfrastructureServiceRegistration
         services.Configure<JsonOptions>(options =>
         {
             options.SerializerOptions.Converters.Add(new JsonStringEnumConverter());
+        });
+        return services;
+    }
+
+    public static IServiceCollection AddGlobalJsonOptions(this IServiceCollection services)
+    {
+        services.Configure<JsonSerializerOptions>(options =>
+        {
+            options.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+            options.IncludeFields = true;
+            options.WriteIndented = true;
         });
         return services;
     }

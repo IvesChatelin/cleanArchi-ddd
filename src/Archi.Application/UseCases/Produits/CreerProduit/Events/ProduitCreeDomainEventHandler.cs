@@ -16,7 +16,7 @@ public class ProduitCreeDomainEventHandler : IDomainEventHandler<ProduitCreeDoma
     public Task Handle(ProduitCreeDomainEvent notification, CancellationToken cancellationToken)
     {
         // Handle the event (e.g., log it, update read models, etc.)
-        _logger.LogInformation("Notificatif : Produit créé : {Nom}", notification.Produit.Nom);
+        _logger.LogInformation("Notificatif : Produit créé : {Nom}", notification.ProduitId.Value);
         return Task.CompletedTask;
     }
 }

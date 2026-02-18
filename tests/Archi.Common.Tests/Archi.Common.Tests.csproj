@@ -10,8 +10,4 @@
     <PackageReference Include="Testcontainers.PostgreSql" Version="4.10.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Provider/" />
-  </ItemGroup>
-
 </Project>

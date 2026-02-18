@@ -5,7 +5,7 @@ namespace Archi.SharedKernel.Models;
 /// <summary>
 /// Interface qui sert de type pour les entités pour IoC
 /// </summary>
-public interface IEntity
+public interface IHasDomainEvent
 {
     IReadOnlyList<IDomainEvent> GetDomainEvents();
     void ClearDomainEvents();

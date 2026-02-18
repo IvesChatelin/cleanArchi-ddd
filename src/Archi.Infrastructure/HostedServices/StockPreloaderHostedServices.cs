@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Hosting;
 
-namespace Archi.Infrastructure.BackgroundServices;
+namespace Archi.Infrastructure.HostedServices;
 
 public class StockPreloaderHostedServices : IHostedService
 {

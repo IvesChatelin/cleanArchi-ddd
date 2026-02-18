@@ -38,7 +38,7 @@ public class Produit : AggregateRoot<ProduitId>
             return Result<Produit>.Failure(ProduitErrors.InvalidPriceUnitaireTTC);
         
         var produit = new Produit(ProduitId.Creer(), nom, prix, stockDisponible);
-        produit.RaiseDomainEvent(new ProduitCreeDomainEvent(produit));
+        produit.RaiseDomainEvent(new ProduitCreeDomainEvent(produit.Id));
         return Result<Produit>.Success(produit);
     }
 

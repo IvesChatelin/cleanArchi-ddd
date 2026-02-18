@@ -6,7 +6,7 @@ namespace Archi.SharedKernel.Models;
 /// Classe de base des entités du domaine
 /// </summary>
 /// <typeparam name="T">Type de l'identifiant de l'entité</typeparam>
-public abstract class Entity<T> : IEntity
+public abstract class Entity<T>
 {
     /// <summary>
     /// Identifiant de l'entité
@@ -20,21 +20,4 @@ public abstract class Entity<T> : IEntity
 
 #pragma warning disable CS8618
     protected Entity(){}
-
-    private readonly List<IDomainEvent> _domainEvents = [];
-
-    public IReadOnlyList<IDomainEvent> GetDomainEvents()
-    {
-        return [.. _domainEvents];
-    }
-
-    public void ClearDomainEvents()
-    {
-        _domainEvents.Clear();
-    }
-
-    protected void RaiseDomainEvent(IDomainEvent domainEvent)
-    {
-        _domainEvents.Add(domainEvent);
-    } 
 }

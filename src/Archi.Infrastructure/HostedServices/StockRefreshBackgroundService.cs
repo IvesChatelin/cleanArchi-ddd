@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Hosting;
 
-namespace Archi.Infrastructure.BackgroundServices;
+namespace Archi.Infrastructure.HostedServices;
 
 public class StockRefreshBackgroundService : BackgroundService
 {
@@ -9,7 +9,9 @@ public class StockRefreshBackgroundService : BackgroundService
         while (!stoppingToken.IsCancellationRequested)
         {
             // logic
-            await Task.Delay(TimeSpan.FromMinutes(30), stoppingToken); // wait 30 min
+            await Task.Delay(TimeSpan.FromMinutes(2), stoppingToken); // wait 30 min
         }
     }
+
+    // outbox repository 
 }
