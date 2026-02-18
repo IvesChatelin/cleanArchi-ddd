@@ -6,11 +6,16 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Services\**" />
+    <EmbeddedResource Remove="Services\**" />
+    <None Remove="Services\**" />
+  </ItemGroup>
+
 	<ItemGroup>
 	  <Folder Include="Persistence/Dapper/" />
 	  <Folder Include="Persistence/EFCore/" />
 	  <Folder Include="Persistence\" />
-	  <Folder Include="Services\" />
 	</ItemGroup>
 
 	<ItemGroup>

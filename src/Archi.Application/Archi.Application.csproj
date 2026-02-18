@@ -6,6 +6,18 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Common\Mapping\**" />
+    <Compile Remove="UseCases\Factures\Common\**" />
+    <Compile Remove="UseCases\Factures\SupprimerUneFacture \**" />
+    <EmbeddedResource Remove="Common\Mapping\**" />
+    <EmbeddedResource Remove="UseCases\Factures\Common\**" />
+    <EmbeddedResource Remove="UseCases\Factures\SupprimerUneFacture \**" />
+    <None Remove="Common\Mapping\**" />
+    <None Remove="UseCases\Factures\Common\**" />
+    <None Remove="UseCases\Factures\SupprimerUneFacture \**" />
+  </ItemGroup>
+
 	<ItemGroup>
     	<PackageReference Include="Scrutor" Version="7.0.0" />
 		<PackageReference Include="Serilog" Version="4.3.1-dev-02404" />
@@ -18,13 +30,6 @@
 		<ProjectReference Include="../Archi.SharedKernel/Archi.SharedKernel.csproj" />
 		<ProjectReference Include="..\Archi.Domain\Archi.Domain.csproj" />
 		<ProjectReference Include="..\Archi.Contracts\Archi.Contracts.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Common/Mapping/" />
-	  <Folder Include="UseCases/Factures/Common/" />
-	  <Folder Include="UseCases/Factures/Common/Queries/" />
-	  <Folder Include="UseCases/Factures/SupprimerUneFacture /" />
 	</ItemGroup>
 
 </Project>

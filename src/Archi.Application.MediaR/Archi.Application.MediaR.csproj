@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="UseCases\**" />
+    <EmbeddedResource Remove="UseCases\**" />
+    <None Remove="UseCases\**" />
+  </ItemGroup>
+
+  <ItemGroup>
 		<PackageReference Include="MediatR" Version="14.0.0" />
 	</ItemGroup>
 
@@ -18,7 +24,6 @@
     <Folder Include="Common/" />
     <Folder Include="Common/Abstractions/" />
     <Folder Include="Common/Abstractions/Commands/" />
-    <Folder Include="UseCases/" />
   </ItemGroup>
 
 </Project>
